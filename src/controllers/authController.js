@@ -10,7 +10,7 @@ import { Session } from '../models/session.js';
 //import { sendMail } from '../utils/sendMail.js';
 
 export const registerUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -20,6 +20,7 @@ export const registerUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await User.create({
+    name,
     email,
     password: hashedPassword,
   });

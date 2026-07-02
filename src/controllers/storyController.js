@@ -194,3 +194,13 @@ export const toggleSaveStory = async (req, res) => {
     .status(200)
     .json({ status: 200, message: 'Story saved', data: { saved: true } });
 };
+
+export const getPopularStories = async (req, res) => {
+  const stories = await Story.find()
+    .populate('category')
+    .populate('ownerId', 'name avatarUrl')
+    .sort({ savedCount: -1 })
+    .limit(10);
+
+  res.status(200).json({ stories });
+};

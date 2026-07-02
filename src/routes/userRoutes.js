@@ -8,8 +8,6 @@ import {
   updateUserAvatar,
   getAllUsers,
   getUserById,
-  saveStory,
-  deleteStory,
   verifyUser,
 } from '../controllers/userController.js';
 import {
@@ -17,16 +15,17 @@ import {
   getAllUsersSchema,
   getUserByIdSchema,
   saveStorySchema,
-  deleteStorySchema,
   verifyUserSchema,
 } from '../validations/userValidation.js';
 
+import { toggleSaveStory } from '../controllers/storyController.js';
+
 const router = Router();
 
-router.get('/users/me', celebrate(), getCurrentUser);
+router.get('/users/me', authenticate, getCurrentUser);
+router.get('/users/verify/:token', celebrate(verifyUserSchema), verifyUser);
 router.get('/users', celebrate(getAllUsersSchema), getAllUsers);
 router.get('/users/:userId', celebrate(getUserByIdSchema), getUserById);
-router.get('/users / verify /:token', celebrate(verifyUserSchema), verifyUser);
 
 router.patch(
   '/users/me',
@@ -46,13 +45,7 @@ router.patch(
   '/users/me/saved/:storyId',
   authenticate,
   celebrate(saveStorySchema),
-  saveStory,
-);
-router.delete(
-  '/users/me/saved/:storyId',
-  authenticate,
-  celebrate(deleteStorySchema),
-  deleteStory,
+  toggleSaveStory,
 );
 
 export default router;

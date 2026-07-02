@@ -1,9 +1,9 @@
 import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
-import { Story } from '../models/story';
+import { Story } from '../models/story.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { EmailVerification } from '../models/emailVerification.js';
-import { ONE_DAY } from '../constants/time';
+import { ONE_DAY } from '../constants/time.js';
 import { sendMail } from '../utils/sendMail.js';
 import { nanoid } from 'nanoid';
 
